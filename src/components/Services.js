@@ -1,10 +1,40 @@
-import React from 'react'
-import styled from 'styled-components'
-import { services } from '../utils/constants'
+import React from 'react';
+import styled from 'styled-components';
+import { services } from '../utils/constants';
 
 const Services = () => {
-  return <h4>services </h4>
-}
+  return (
+    <Wrapper>
+      <div className='section-center'>
+        <article className='header'>
+          <h3>
+            custom furniture <br />
+            built only for you
+          </h3>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima aut
+            illum harum autem quasi, porro impedit laudantium dignissimos! Modi
+            necessitatibus fuga, rerum delectus saepe totam eveniet quasi
+            similique, cupiditate voluptates earum voluptatibus deleniti velit
+            officia ex cum adipisci doloribus officiis.
+          </p>
+        </article>
+        <div className='services-center'>
+          {services.map((serv) => {
+            const { id, icon, title, text } = serv;
+            return (
+              <article className='service' key={id}>
+                <span className='icon'>{icon}</span>
+                <h4>{title}</h4>
+                <p>{text}</p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   h3,
@@ -68,5 +98,5 @@ const Wrapper = styled.section`
       transform: translateY(5rem);
     }
   }
-`
-export default Services
+`;
+export default Services;
