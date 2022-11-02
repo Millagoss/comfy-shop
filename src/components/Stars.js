@@ -1,9 +1,32 @@
-import React from 'react'
-import styled from 'styled-components'
-import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
-const Stars = () => {
-  return <h4>stars</h4>
-}
+import React from 'react';
+import styled from 'styled-components';
+import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs';
+const Stars = ({ stars, reviews }) => {
+  console.log(stars);
+
+  const tempStars = Array.from({ length: 5 }, (_, index) => {
+    const num = index + 0.5;
+
+    return (
+      <span key={index}>
+        {stars >= index + 1 ? (
+          <BsStarFill />
+        ) : stars >= num ? (
+          <BsStarHalf />
+        ) : (
+          <BsStar />
+        )}
+      </span>
+    );
+  });
+
+  return (
+    <Wrapper>
+      <div className='stars'>{tempStars}</div>
+      <p className='reviews'>({reviews} customer reviews)</p>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,5 +41,29 @@ const Wrapper = styled.div`
     margin-bottom: 0;
   }
   margin-bottom: 0.5rem;
-`
-export default Stars
+`;
+export default Stars;
+
+// MY APPROACH
+
+// numbers.map((num, index) => {
+//   if (stars >= num) {
+//     return (
+//       <span key={index}>
+//         <BsStarFill />
+//       </span>
+//     );
+//   } else if (stars >= num - 0.5) {
+//     return (
+//       <span key={index}>
+//         <BsStarHalf />
+//       </span>
+//     );
+//   } else {
+//     return (
+//       <span key={index}>
+//         <BsStar />
+//       </span>
+//     );
+//   }
+// });
