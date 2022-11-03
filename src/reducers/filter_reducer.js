@@ -10,6 +10,21 @@ const filter_reducer = (state, action) => {
     };
   }
 
+  if (type === ACTIONS.SET_GRIDVIEW) {
+    return { ...state, grid_view: true };
+  }
+  if (type === ACTIONS.SET_LISTVIEW) {
+    return { ...state, grid_view: false };
+  }
+
+  if (type === ACTIONS.UPDATE_SORT) {
+    return { ...state, sort: payload };
+  }
+
+  if (type === ACTIONS.SORT_PRODUCTS) {
+    return { ...state, filtered_products: payload };
+  }
+
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 
