@@ -3,10 +3,13 @@ import { ACTIONS } from '../actions';
 const filter_reducer = (state, action) => {
   const { type, payload } = action;
   if (type === ACTIONS.LOAD_PRODUCTS) {
+    let maxPrice = payload.map((p) => p.price);
+    maxPrice = Math.max(...maxPrice);
     return {
       ...state,
       all_products: [...payload],
       filtered_products: [...payload],
+      filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
     };
   }
 
@@ -21,11 +24,54 @@ const filter_reducer = (state, action) => {
     return { ...state, sort: payload };
   }
 
+  if (type === ACTIONS.UPDATE_FILTERS) {
+    const { value, name } = payload;
+    return { ...state, filters: { ...state.filters, [name]: value } };
+  }
+
+  if (type === ACTIONS.FILTER_PRODUCTS) {
+    const tempProducts = filterProducts(state);
+    return { ...state, filtered_products: tempProducts };
+  }
+
   if (type === ACTIONS.SORT_PRODUCTS) {
-    return { ...state, filtered_products: payload };
+    const sortedProducts = sortItems(state.sort, state);
+    return { ...state, filtered_products: sortedProducts };
   }
 
   throw new Error(`No Matching "${action.type}" - action type`);
+};
+
+const filterProducts = (state) => {
+  const { all_products, filters } = state;
+  let tempProducts = [...all_products];
+
+  const { text, category, company, color, price, shipping } = filters;
+  if (text) {
+    tempProducts = tempProducts.filter((product) => {
+      return product.name.toLowerCase().includes(text);
+    });
+  }
+  return tempProducts;
+};
+
+const sortItems = (param, state) => {
+  const { filtered_products } = state;
+  let tempProducts = [...filtered_products];
+
+  if (param === 'price-lowest') {
+    tempProducts = tempProducts.sort((a, b) => a.price - b.price);
+  }
+  if (param === 'price-highest') {
+    tempProducts = tempProducts.sort((a, b) => b.price - a.price);
+  }
+  if (param === 'name-a') {
+    tempProducts = tempProducts.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  if (param === 'name-z') {
+    tempProducts = tempProducts.sort((a, b) => b.name.localeCompare(a.name));
+  }
+  return tempProducts;
 };
 
 export default filter_reducer;
