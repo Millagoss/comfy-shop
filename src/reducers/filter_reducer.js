@@ -42,6 +42,7 @@ const filter_reducer = (state, action) => {
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 
+// filter_products function////////////////////
 const filterProducts = (state) => {
   const { all_products, filters } = state;
   let tempProducts = [...all_products];
@@ -52,9 +53,17 @@ const filterProducts = (state) => {
       return product.name.toLowerCase().includes(text);
     });
   }
+  if (category !== 'all') {
+    tempProducts = tempProducts.filter((product) => {
+      if (product.category.toLowerCase() === category.toLowerCase()) {
+        return category;
+      }
+    });
+  }
   return tempProducts;
 };
 
+// sort_products function////////////////////
 const sortItems = (param, state) => {
   const { filtered_products } = state;
   let tempProducts = [...filtered_products];

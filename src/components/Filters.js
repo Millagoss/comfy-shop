@@ -18,7 +18,12 @@ const Filters = () => {
     },
     updateFilters,
     clearFilters,
+    all_products,
   } = useFilterContext();
+
+  const categories = getUniqueValues(all_products, 'category');
+  const companies = getUniqueValues(all_products, 'company');
+  const colors = getUniqueValues(all_products, 'colors');
 
   return (
     <Wrapper>
@@ -33,6 +38,25 @@ const Filters = () => {
               value={text}
               onChange={updateFilters}
             />
+          </div>
+
+          <div className='form-control'>
+            <h5>category</h5>
+            <div>
+              {categories.map((cat, index) => {
+                return (
+                  <button
+                    className={cat === category ? 'active' : null}
+                    name='category'
+                    key={index}
+                    onClick={updateFilters}
+                    value={cat}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </form>
       </div>
@@ -69,9 +93,17 @@ const Wrapper = styled.section`
     letter-spacing: var(--spacing);
     color: var(--clr-grey-5);
     cursor: pointer;
+
+    :hover {
+      color: wheat;
+      letter-spacing: 2px;
+    }
   }
+
   .active {
     border-color: var(--clr-grey-5);
+    font-weight: bold;
+    color: var(--clr-primary-6);
   }
   .company {
     background: var(--clr-grey-10);

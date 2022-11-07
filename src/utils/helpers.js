@@ -5,4 +5,15 @@ export const formatPrice = (number) => {
   }).format(number / 100);
 };
 
-export const getUniqueValues = () => {};
+export const getUniqueValues = (products, param) => {
+  let uniqueVaues = [];
+
+  if (products.length > 0) {
+    uniqueVaues = products.map((product) => product[param]);
+
+    if (param === 'colors') {
+      uniqueVaues = uniqueVaues.flat();
+    }
+  }
+  return ['all', ...new Set(uniqueVaues)];
+};
