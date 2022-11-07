@@ -48,6 +48,7 @@ const Filters = () => {
                   <button
                     className={cat === category ? 'active' : null}
                     name='category'
+                    type='button'
                     key={index}
                     onClick={updateFilters}
                     value={cat}
@@ -57,6 +58,24 @@ const Filters = () => {
                 );
               })}
             </div>
+          </div>
+
+          <div className='form-control'>
+            <h5>company</h5>
+            <select
+              name='company'
+              value={company}
+              onChange={updateFilters}
+              className='company'
+            >
+              {companies.map((company, index) => {
+                return (
+                  <option key={index} value={company}>
+                    {company}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </form>
       </div>
@@ -110,6 +129,7 @@ const Wrapper = styled.section`
     border-radius: var(--radius);
     border-color: transparent;
     padding: 0.25rem;
+    outline: none;
   }
   .colors {
     display: flex;

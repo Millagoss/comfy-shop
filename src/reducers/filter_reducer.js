@@ -60,6 +60,14 @@ const filterProducts = (state) => {
       }
     });
   }
+
+  if (company !== 'all') {
+    tempProducts = tempProducts.filter((product) => {
+      if (product.company.toLowerCase() === company.toLowerCase()) {
+        return company;
+      }
+    });
+  }
   return tempProducts;
 };
 
