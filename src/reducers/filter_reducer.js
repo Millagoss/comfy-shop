@@ -77,6 +77,14 @@ const filterProducts = (state) => {
       }
     });
   }
+
+  if (price) {
+    tempProducts = tempProducts.filter((product) => {
+      if (product.price < price) {
+        return product;
+      }
+    });
+  }
   return tempProducts;
 };
 
