@@ -68,6 +68,15 @@ const filterProducts = (state) => {
       }
     });
   }
+
+  if (color !== 'all') {
+    tempProducts = tempProducts.filter((product) => {
+      const bool = product.colors.find((col) => col === color);
+      if (bool) {
+        return product;
+      }
+    });
+  }
   return tempProducts;
 };
 

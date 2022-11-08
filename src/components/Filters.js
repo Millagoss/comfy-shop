@@ -77,6 +77,39 @@ const Filters = () => {
               })}
             </select>
           </div>
+
+          <div className='form-control'>
+            <h5>colors</h5>
+            <div className='colors'>
+              {colors.map((col, index) => {
+                if (col === 'all') {
+                  return (
+                    <button
+                      key={index}
+                      name='color'
+                      className={color === col ? 'active all-btn' : 'all-btn'}
+                      onClick={updateFilters}
+                      value={col}
+                    >
+                      all
+                    </button>
+                  );
+                }
+                return (
+                  <button
+                    key={index}
+                    name='color'
+                    style={{ background: col }}
+                    className={color === col ? 'active color-btn' : 'color-btn'}
+                    onClick={updateFilters}
+                    value={col}
+                  >
+                    {col === color ? <FaCheck /> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </form>
       </div>
     </Wrapper>
