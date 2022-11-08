@@ -15,6 +15,7 @@ const initialState = {
     color: 'all',
     min_price: 0,
     max_price: 0,
+    price: 0,
     shipping: false,
   },
 };
@@ -41,10 +42,15 @@ export const FilterProvider = ({ children }) => {
     if (name === 'price') {
       value = Number(value);
     }
+    if (name === 'shipping') {
+      value = e.target.checked;
+    }
     dispatch({ type: ACTIONS.UPDATE_FILTERS, payload: { name, value } });
   };
 
-  const clearFilters = (e) => {};
+  const clearFilters = (e) => {
+    dispatch({ type: ACTIONS.CLEAR_FILTERS });
+  };
 
   const setGridView = () => {
     dispatch({ type: ACTIONS.SET_GRIDVIEW });

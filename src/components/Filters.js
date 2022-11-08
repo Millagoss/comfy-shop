@@ -120,15 +120,24 @@ const Filters = () => {
               onChange={updateFilters}
               min={min_price}
               max={max_price}
-              value={price || ''}
+              value={price}
+            />
+          </div>
+
+          <div className='form-control shipping'>
+            <label htmlFor='shipping'> free shipping</label>
+            <input
+              type='checkbox'
+              name='shipping'
+              id='shipping'
+              onChange={updateFilters}
+              checked={shipping}
             />
           </div>
         </form>
-
-        <div className='form-control shipping'>
-          <label htmlFor='shipping'>free shipping</label>
-          <input type='checkbox' name='shipping' id='shipping' />
-        </div>
+        <button type='button' className='clear-btn' onClick={clearFilters}>
+          clear filters
+        </button>
       </div>
     </Wrapper>
   );
@@ -221,8 +230,8 @@ const Wrapper = styled.section`
     margin-bottom: 0.25rem;
   }
   .shipping {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    /* grid-template-columns: auto 1fr; */
     align-items: center;
     text-transform: capitalize;
     column-gap: 0.5rem;

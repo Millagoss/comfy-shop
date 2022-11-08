@@ -38,6 +38,20 @@ const filter_reducer = (state, action) => {
     const sortedProducts = sortItems(state.sort, state);
     return { ...state, filtered_products: sortedProducts };
   }
+  if (type === ACTIONS.CLEAR_FILTERS) {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        text: '',
+        company: 'all',
+        category: 'all',
+        color: 'all',
+        price: state.filters.max_price,
+        shipping: false,
+      },
+    };
+  }
 
   throw new Error(`No Matching "${action.type}" - action type`);
 };
@@ -81,6 +95,14 @@ const filterProducts = (state) => {
   if (price) {
     tempProducts = tempProducts.filter((product) => {
       if (product.price < price) {
+        return product;
+      }
+    });
+  }
+
+  if (shipping) {
+    tempProducts = tempProducts.filter((product) => {
+      if (product.shipping) {
         return product;
       }
     });
