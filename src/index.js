@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -9,11 +9,15 @@ import { UserProvider } from './context/user_context';
 import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
-  <ProductsProvider>
-    <FilterProvider>
-      <App />
-    </FilterProvider>
-  </ProductsProvider>,
+  <StrictMode>
+    <ProductsProvider>
+      <FilterProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </FilterProvider>
+    </ProductsProvider>
+  </StrictMode>,
 
   document.getElementById('root')
 );

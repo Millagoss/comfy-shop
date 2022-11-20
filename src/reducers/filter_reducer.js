@@ -68,44 +68,29 @@ const filterProducts = (state) => {
     });
   }
   if (category !== 'all') {
-    tempProducts = tempProducts.filter((product) => {
-      if (product.category.toLowerCase() === category.toLowerCase()) {
-        return category;
-      }
-    });
+    tempProducts = tempProducts.filter(
+      (product) => product.category === category
+    );
   }
 
   if (company !== 'all') {
-    tempProducts = tempProducts.filter((product) => {
-      if (product.company.toLowerCase() === company.toLowerCase()) {
-        return company;
-      }
-    });
+    tempProducts = tempProducts.filter(
+      (product) => product.company.toLowerCase() === company.toLowerCase()
+    );
   }
 
   if (color !== 'all') {
     tempProducts = tempProducts.filter((product) => {
-      const bool = product.colors.find((col) => col === color);
-      if (bool) {
-        return product;
-      }
+      return product.colors.find((col) => col === color);
     });
   }
 
   if (price) {
-    tempProducts = tempProducts.filter((product) => {
-      if (product.price < price) {
-        return product;
-      }
-    });
+    tempProducts = tempProducts.filter((product) => product.price <= price);
   }
 
   if (shipping) {
-    tempProducts = tempProducts.filter((product) => {
-      if (product.shipping) {
-        return product;
-      }
-    });
+    tempProducts = tempProducts.filter((product) => product.shipping === true);
   }
   return tempProducts;
 };

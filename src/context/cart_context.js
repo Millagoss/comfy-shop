@@ -2,14 +2,43 @@ import React, { useEffect, useContext, useReducer } from 'react';
 import reducer from '../reducers/cart_reducer';
 import { ACTIONS } from '../actions';
 
-const initialState = {};
+const getPreviousCartItems = () => {
+  let cartItems = localStorage.getItem('cart-items');
+  if (cartItems) {
+    return JSON.parse(cartItems);
+  }
+  return [];
+};
+
+const initialState = {
+  cart: getPreviousCartItems(),
+  total_items: 0,
+  total_amount: 0,
+  shipping_fee: 523,
+};
 
 const CartContext = React.createContext();
 
 export const CartProvider = ({ children }) => {
-  return (
-    <CartContext.Provider value='cart context'>{children}</CartContext.Provider>
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem('cart-items', JSON.stringify(state.cart));
+  }, [state.cart]);
+
+  const addToCart = (id, color, amount, product) => {
+    dispatch({
+      type: ACTIONS.ADD_TO_CART,
+      payload: { id, color, amount, product },
+    });
+  };
+
+  const removeItem = (id) => {};
+  const toggleAmount = (id, value) => {};
+  const clearCart = () => {};
+
+  const value = { ...state, addToCart, removeItem, toggleAmount, clearCart };
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 // make sure use
 export const useCartContext = () => {
