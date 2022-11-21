@@ -18,6 +18,7 @@ const Nav = () => {
       navRef.current.style.position = 'fixed';
       navRef.current.style.background = 'var(--clr-primary-9)';
       navRef.current.style.width = '100vw';
+      navRef.current.style.zIndex = '100';
     } else if (window.scrollY < 200) {
       navRef.current.style.background = 'transparent';
       navRef.current.style.position = 'static';

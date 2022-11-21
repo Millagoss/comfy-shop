@@ -5,8 +5,6 @@ const cart_reducer = (state, action) => {
 
   if (type === ACTIONS.ADD_TO_CART) {
     let cartItems = [...state.cart];
-    let totalItem = state.total_items;
-    let totalAmount = state.total_amount;
 
     const { amount, color, id, product } = payload;
 
@@ -15,13 +13,23 @@ const cart_reducer = (state, action) => {
     if (isFound) {
       cartItems = state.cart.map((item) => {
         if (item.id === id + color && item.quantity + amount <= product.stock) {
-          totalItem = state.total_items + amount;
-          totalAmount = state.total_amount + product.price * amount;
           return { ...item, quantity: item.quantity + amount };
         }
         return item;
       });
     } else {
+      // const isAlreadyInCart = state.cart.reduce((total, current) => {
+      //   if (current.name === product.name) {
+      //     total = total + current.quantity;
+      //   }
+      //   return total;
+      // }, 0);
+
+      // if (isAlreadyInCart >= product.stock) {
+      //   cartItems = [...state.cart];
+      //   console.log('ola');
+      //   return;
+      // }
       cartItems = [
         ...state.cart,
         {
@@ -34,15 +42,11 @@ const cart_reducer = (state, action) => {
           max: product.stock,
         },
       ];
-      totalItem = state.total_items + amount;
-      totalAmount = state.total_amount + amount * product.price;
     }
 
     return {
       ...state,
       cart: cartItems,
-      total_items: totalItem,
-      total_amount: totalAmount,
     };
   }
 
@@ -69,6 +73,23 @@ const cart_reducer = (state, action) => {
     return {
       ...state,
       cart: newCartItems,
+      total_items: T_item,
+      total_amount: T_amount,
+    };
+  }
+
+  if (type === ACTIONS.COUNT_CART_TOTALS) {
+    const { T_item, T_amount } = state.cart.reduce(
+      (total, current) => {
+        total.T_item += current.quantity;
+        total.T_amount += current.quantity * current.price;
+        return total;
+      },
+      { T_item: 0, T_amount: 0 }
+    );
+
+    return {
+      ...state,
       total_items: T_item,
       total_amount: T_amount,
     };
