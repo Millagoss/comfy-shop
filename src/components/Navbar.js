@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import logo from '../assets/logo.svg';
 import { FaBars } from 'react-icons/fa';
@@ -11,8 +11,29 @@ import { useUserContext } from '../context/user_context';
 const Nav = () => {
   const { openSidebar } = useProductsContext();
 
+  const navRef = useRef();
+
+  const toggleNavbar = () => {
+    if (window.scrollY > 200) {
+      navRef.current.style.position = 'fixed';
+      navRef.current.style.background = 'var(--clr-primary-9)';
+      navRef.current.style.width = '100vw';
+    } else if (window.scrollY < 200) {
+      navRef.current.style.background = 'transparent';
+      navRef.current.style.position = 'static';
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', toggleNavbar);
+
+    return () => {
+      window.removeEventListener('scroll', toggleNavbar);
+    };
+  });
+
   return (
-    <NavContainer>
+    <NavContainer ref={navRef}>
       <div className='nav-center'>
         <div className='nav-header'>
           <Link to={'/'}>

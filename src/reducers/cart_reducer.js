@@ -2,6 +2,7 @@ import { ACTIONS } from '../actions';
 
 const cart_reducer = (state, action) => {
   const { payload, type } = action;
+
   if (type === ACTIONS.ADD_TO_CART) {
     let cartItems = [...state.cart];
     let totalItem = state.total_items;
@@ -44,6 +45,35 @@ const cart_reducer = (state, action) => {
       total_amount: totalAmount,
     };
   }
+
+  if (type === ACTIONS.CLEAR_CART) {
+    return {
+      cart: [],
+      total_items: 0,
+      total_amount: 0,
+      shipping_fee: 523,
+    };
+  }
+
+  if (type === ACTIONS.REMOVE_CART_ITEM) {
+    let newCartItems = state.cart.filter((item) => item.id != payload);
+    const { T_item, T_amount } = newCartItems.reduce(
+      (total, current) => {
+        total.T_item += current.quantity;
+        total.T_amount += current.quantity * current.price;
+        return total;
+      },
+      { T_item: 0, T_amount: 0 }
+    );
+
+    return {
+      ...state,
+      cart: newCartItems,
+      total_items: T_item,
+      total_amount: T_amount,
+    };
+  }
+
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 
