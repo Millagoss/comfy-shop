@@ -6,9 +6,28 @@ import CartColumns from './CartColumns';
 import CartItem from './CartItem';
 import CartTotals from './CartTotals';
 
-const CartContent = ({ cart }) => {
-  return <Wrapper></Wrapper>;
+const CartContent = () => {
+  const { cart, clearCart } = useCartContext();
+  return (
+    <Wrapper className='section section-center'>
+      <CartColumns />
+      {cart.map((cartItem) => {
+        return <CartItem key={cartItem.id} {...cartItem} />;
+      })}
+      <hr />
+      <div className='link-container'>
+        <Link to='/products' className='link-btn'>
+          continue shopping
+        </Link>
+        <button className='link-btn' type='button' onClick={clearCart}>
+          clear cart
+        </button>
+      </div>
+      <CartTotals />
+    </Wrapper>
+  );
 };
+
 const Wrapper = styled.section`
   .link-container {
     display: flex;
