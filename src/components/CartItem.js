@@ -5,11 +5,18 @@ import AmountButtons from './AmountButtons';
 import { FaTrash } from 'react-icons/fa';
 import { useCartContext } from '../context/cart_context';
 
+import defaultIMage from '../assets/default.png';
+
 const CartItem = ({ id, image, name, color, price, quantity }) => {
   const { removeItem, toggleAmount } = useCartContext();
 
-  const increase = () => {};
-  const decrease = () => {};
+  const increase = () => {
+    toggleAmount(id, 'increase');
+  };
+  const decrease = () => {
+    toggleAmount(id, 'decrease');
+  };
+
   return (
     <Wrapper>
       <div className='title'>

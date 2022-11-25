@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem('cart-items', JSON.stringify(state.cart));
-  }, [state.cart, state.total_items]);
+  }, [state.cart]);
 
   useEffect(() => {
     dispatch({ type: ACTIONS.COUNT_CART_TOTALS });
@@ -40,7 +40,9 @@ export const CartProvider = ({ children }) => {
   const removeItem = (id) => {
     dispatch({ type: ACTIONS.REMOVE_CART_ITEM, payload: id });
   };
-  const toggleAmount = (id, value) => {};
+  const toggleAmount = (id, text) => {
+    dispatch({ type: ACTIONS.TOGGLE_CART_ITEM_AMOUNT, payload: { id, text } });
+  };
   const clearCart = () => {
     dispatch({ type: ACTIONS.CLEAR_CART });
   };
