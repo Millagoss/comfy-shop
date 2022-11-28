@@ -204,3 +204,10 @@ p {
 .page {
   min-height: calc(100vh - (20vh + 10rem));
 }
+
+.undock-navbar {
+  position: fixed;
+  background: rgb(234, 222, 215, 0.7);
+  width: 100vw;
+  z-index: 100;
+}

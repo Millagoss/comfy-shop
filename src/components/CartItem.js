@@ -4,9 +4,6 @@ import { formatPrice } from '../utils/helpers';
 import AmountButtons from './AmountButtons';
 import { FaTrash } from 'react-icons/fa';
 import { useCartContext } from '../context/cart_context';
-
-import defaultIMage from '../assets/default.png';
-
 const CartItem = ({ id, image, name, color, price, quantity }) => {
   const { removeItem, toggleAmount } = useCartContext();
 
