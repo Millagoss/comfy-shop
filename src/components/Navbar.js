@@ -8,8 +8,13 @@ import CartButtons from './CartButtons';
 import { useProductsContext } from '../context/products_context';
 import { useUserContext } from '../context/user_context';
 
+import { useAuth0 } from '@auth0/auth0-react';
+
 const Nav = () => {
   const { openSidebar } = useProductsContext();
+
+  const lol = useAuth0();
+  console.log(lol);
 
   const [navbar, setNavbar] = useState(false);
 
