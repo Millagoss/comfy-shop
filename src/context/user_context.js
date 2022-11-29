@@ -21,7 +21,13 @@ export const UserProvider = ({ children }) => {
     }
   }, [isAuthenticated]);
 
-  const value = { loginWithPopup, loginWithRedirect, logout, myUser };
+  const value = {
+    loginWithPopup,
+    loginWithRedirect,
+    logout,
+    myUser,
+    isAuthenticated,
+  };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 // make sure use

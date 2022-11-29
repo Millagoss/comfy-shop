@@ -11,9 +11,11 @@ import { useUserContext } from '../context/user_context';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Nav = () => {
-  const { openSidebar } = useProductsContext();
+  const { openSidebar, closeSidebar } = useProductsContext();
 
   const [navbar, setNavbar] = useState(false);
+
+  const { myUser } = useUserContext();
 
   const navRef = useRef();
 
@@ -51,6 +53,11 @@ const Nav = () => {
               </li>
             );
           })}
+          {myUser && (
+            <li>
+              <Link to='/checkout'>checkout</Link>
+            </li>
+          )}
         </ul>
         <CartButtons />
       </div>
