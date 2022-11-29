@@ -6,10 +6,9 @@ import { useProductsContext } from '../context/products_context';
 import { useCartContext } from '../context/cart_context';
 import { useUserContext } from '../context/user_context';
 
-import { useAuth0 } from '@auth0/auth0-react';
-
 const CartButtons = () => {
-  const { loginWithPopup, loginWithRedirect, isLoading, logout } = useAuth0();
+  const { myUser, loginWithRedirect, loginWithPopup, isLoading, logout } =
+    useUserContext();
 
   const { closeSidebar } = useProductsContext();
   const { total_items } = useCartContext();
@@ -22,18 +21,72 @@ const CartButtons = () => {
           <span className='cart-value'>{total_items}</span>
         </span>
       </Link>
-      <button type='button' className='auth-btn' onClick={() => logout()}>
-        Login <FaUserPlus />
-      </button>
+      <div className='profile-info'>
+        {!myUser ? (
+          <button type='button' className='auth-btn' onClick={loginWithPopup}>
+            Login <FaUserPlus />
+          </button>
+        ) : (
+          <button
+            type='button'
+            className='auth-btn'
+            onClick={() =>
+              logout({
+                returnTo: window.location.origin,
+              })
+            }
+          >
+            Logout <FaUserMinus />
+          </button>
+        )}
+
+        {myUser ? (
+          <>
+            <img
+              src={myUser.picture}
+              title={myUser.given_name || myUser.name}
+              className='profile'
+              alt=''
+            />
+            <p className='username'>{myUser.given_name || myUser.name}</p>
+          </>
+        ) : (
+          ''
+        )}
+      </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr;
+  width: fit-content;
+  column-gap: 19px;
   align-items: center;
-  width: 225px;
+  justify-content: center;
+
+  .profile-info {
+    display: flex;
+    width: fit-content;
+    height: 3rem;
+    column-gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    .profile {
+      width: 3rem;
+      border-radius: 50%;
+    }
+    .username {
+      margin-top: 1.2rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: var(--clr-grey-2);
+    }
+  }
 
   .cart-btn {
     color: var(--clr-grey-1);
@@ -41,8 +94,7 @@ const Wrapper = styled.div`
     letter-spacing: var(--spacing);
     color: var(--clr-grey-1);
     display: flex;
-
-    align-items: center;
+    width: fit-content;
   }
   .cart-container {
     display: flex;
