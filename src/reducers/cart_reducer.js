@@ -56,7 +56,7 @@ const cart_reducer = (state, action) => {
   }
 
   if (type === ACTIONS.REMOVE_CART_ITEM) {
-    let newCartItems = state.cart.filter((item) => item.id != payload);
+    let newCartItems = state.cart.filter((item) => item.id !== payload);
     return {
       ...state,
       cart: newCartItems,
@@ -89,7 +89,7 @@ const cart_reducer = (state, action) => {
             return { ...item, quantity: item.quantity + 1 };
           }
         } else if (text === 'decrease') {
-          if (item.quantity != 1) {
+          if (item.quantity !== 1) {
             return { ...item, quantity: item.quantity - 1 };
           }
         }

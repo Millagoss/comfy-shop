@@ -4,22 +4,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 const UserContext = React.createContext();
 export const UserProvider = ({ children }) => {
   const [myUser, setMyUser] = useState(null);
-  const {
-    isAuthenticated,
-    loginWithPopup,
-    loginWithRedirect,
-    logout,
-    user,
-    isLoading,
-  } = useAuth0();
+  const { isAuthenticated, loginWithPopup, loginWithRedirect, logout, user } =
+    useAuth0();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setMyUser(user);
-    } else {
-      setMyUser(null);
-    }
-  }, [isAuthenticated]);
+    setMyUser(user);
+  }, [user]);
 
   const value = {
     loginWithPopup,
