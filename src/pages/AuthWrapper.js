@@ -8,6 +8,7 @@ const AuthWrapper = ({ children }) => {
   if (isLoading) {
     return (
       <Wrapper>
+        <div className='loading'></div>
         <h1>Loading...</h1>
       </Wrapper>
     );
@@ -28,6 +29,11 @@ const Wrapper = styled.section`
   min-height: 100vh;
   display: grid;
   place-items: center;
+
+  h1 {
+    margin-top: -25rem;
+    color: var(--clr-primary-5);
+  }
 `;
 
 export default AuthWrapper;
