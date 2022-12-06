@@ -46,7 +46,7 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     createPaymentIntent();
-    // eslin-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = async (event) => {
