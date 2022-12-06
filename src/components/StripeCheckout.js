@@ -17,6 +17,7 @@ const promise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
 
 const CheckoutForm = () => {
   const { cart, total_amount, shipping_fee, clearCart } = useCartContext();
+
   const { myUser } = useUserContext();
 
   const navigate = useNavigate();
@@ -24,15 +25,23 @@ const CheckoutForm = () => {
   // STRIPE STUFF
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
-  const [isProcessing, setIsProcessing] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [processing, setProcessing] = useState('');
+  const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
 
   const stripe = useStripe();
   const elements = useElements();
 
   const createPaymentIntent = async () => {
-    console.log('ola ');
+    try {
+      const { data } = await axios.post(
+        '/.netlify/functions/create-payment-intent',
+        JSON.stringify({ cart, shipping_fee, total_amount })
+      );
+      setClientSecret(data.clientSecret);
+    } catch (error) {
+      // console.log(error.response);
+    }
   };
 
   useEffect(() => {
@@ -70,13 +79,9 @@ const CheckoutForm = () => {
           options={cardStyle}
           onChange={handleChange}
         />
-        <button disabled={isProcessing || isDisabled || succeeded} id='submit'>
+        <button disabled={processing || disabled || succeeded} id='submit'>
           <span id='button-text'>
-            {isProcessing ? (
-              <div className='spinner' id='spinner'></div>
-            ) : (
-              'Pay'
-            )}
+            {processing ? <div className='spinner' id='spinner'></div> : 'Pay'}
           </span>
         </button>
 
@@ -91,11 +96,11 @@ const CheckoutForm = () => {
         {/* show success */}
 
         <p className={succeeded ? 'result-message' : 'result-message hidden'}>
-          Payment Succedded, see the result in Your
+          Payment Succedded, see the result in Your{' '}
           <a href='https://dashboard.stripe.com/test/payments'>
             Stripe dashboard.
           </a>
-          Refresh te page to pay again
+          Refresh the page to pay again
         </p>
       </form>
     </div>

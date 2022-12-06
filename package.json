@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "auth0": "^2.44.0",
     "axios": "^0.19.2",
+    "dotenv": "^16.0.3",
     "fusioncharts": "^3.15.1-sr.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

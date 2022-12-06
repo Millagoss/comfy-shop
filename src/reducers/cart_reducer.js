@@ -30,7 +30,7 @@ const cart_reducer = (state, action) => {
       //   console.log('ola');
       //   return;
       // }
-      console.log(product);
+
       cartItems = [
         ...state.cart,
         {
