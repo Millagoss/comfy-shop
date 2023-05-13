@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar, Sidebar, Footer } from './components';
 
@@ -14,7 +14,13 @@ import {
   AuthWrapper,
 } from './pages';
 
+const teleBot = window.Telegram.WebApp;
+
 function App() {
+  useEffect(() => {
+    teleBot.ready();
+  }, []);
+
   return (
     <AuthWrapper>
       <BrowserRouter>
